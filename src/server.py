@@ -7,8 +7,10 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_drawing = mp.solutions.drawing_utils
 
 from sound import speech
+from server_MQTT.publisher import send
 
 # vcap = cv2.VideoCapture("rtmp://192.168.55.1/rtmp/live")
+# webcam
 vcap = cv2.VideoCapture(0)
 vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
@@ -35,8 +37,9 @@ with mp_hands.Hands( model_complexity=0, min_detection_confidence=0.5, min_track
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             start = timeit.default_timer()
             if results.multi_hand_landmarks:
-                # print("mep")
-                speech("mep")
+                print("mep")
+                # speech("mep")
+                send("mep")
                 for hand_landmarks in results.multi_hand_landmarks:
                     mp_drawing.draw_landmarks(
                         image,

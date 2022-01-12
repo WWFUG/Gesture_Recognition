@@ -6,7 +6,7 @@ mp_hands = mp.solutions.hands
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_drawing = mp.solutions.drawing_utils
 
-vcap = cv2.VideoCapture("rtmp://192.168.55.1/rtmp/live")
+vcap = cv2.VideoCapture("rtmp://192.168.208.223/rtmp/live")
 # vcap = cv2.VideoCapture(0)
 vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 

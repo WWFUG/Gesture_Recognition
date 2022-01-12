@@ -2,8 +2,9 @@ import mediapipe as mp
 import cv2
 
 DIR = "./dataset/"
-CATEGORY = ['A', 'B', 'C','D','E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'
-            , 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'del', 'space' ]
+# CATEGORY = ['A', 'B', 'C','D','E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'
+#             , 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'del', 'space' ]
+CATEGORY = ['L']
 DNUM = 3000
 mp_hands = mp.solutions.hands
 

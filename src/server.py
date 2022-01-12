@@ -6,8 +6,10 @@ mp_hands = mp.solutions.hands
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_drawing = mp.solutions.drawing_utils
 
-vcap = cv2.VideoCapture("rtmp://192.168.55.1/rtmp/live")
-# vcap = cv2.VideoCapture(0)
+from sound import speech
+
+# vcap = cv2.VideoCapture("rtmp://192.168.55.1/rtmp/live")
+vcap = cv2.VideoCapture(0)
 vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
 interval = 10
@@ -23,7 +25,7 @@ with mp_hands.Hands( model_complexity=0, min_detection_confidence=0.5, min_track
 
         # To improve performance, optionally mark the image as not writeable to
         # pass by reference.
-        if i%interval==0: 
+        if i%interval==0:
             image.flags.writeable = False
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             results = hands.process(image)
@@ -33,7 +35,8 @@ with mp_hands.Hands( model_complexity=0, min_detection_confidence=0.5, min_track
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             start = timeit.default_timer()
             if results.multi_hand_landmarks:
-                print("mep")
+                # print("mep")
+                speech("mep")
                 for hand_landmarks in results.multi_hand_landmarks:
                     mp_drawing.draw_landmarks(
                         image,

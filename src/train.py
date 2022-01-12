@@ -1,2 +1,4 @@
 from pycaret.classification import *
+import pandas as pd
 
+df = pd.read_csv()

@@ -1,4 +1,5 @@
 dataset.zip
 dataset/
+data/
 **/__pycache__/
 **/*.log

@@ -7,7 +7,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_drawing = mp.solutions.drawing_utils
 
 from sound import speech
-# from server_MQTT.publisher import send
+from server_MQTT.publisher import send
 
 
 # vcap = cv2.VideoCapture("rtmp://192.168.55.1/rtmp/live")		# rtmp
@@ -16,7 +16,7 @@ vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
 interval = 2
 i=0
-from predict import Predictor
+# from predict import Predictor
 # p = Predictor()
 
 with mp_hands.Hands( model_complexity=0, min_detection_confidence=0.5, min_tracking_confidence=0.5) as hands:
@@ -53,7 +53,7 @@ with mp_hands.Hands( model_complexity=0, min_detection_confidence=0.5, min_track
 					# predict 
 					# ch = p.predict( hand_landmarks.landmark )
 					# speech("mep")
-					# send("mep")
+					send("mep")
 
 			end = timeit.default_timer()
 			#print("Drawing time ", end-start)

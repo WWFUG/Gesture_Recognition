@@ -21,7 +21,8 @@ def listen():
     # Establish connection to mqtt broker
     client = mqtt.Client()
     client.on_message = on_message
-    client.connect(host = "localhost", port = 1883)
+    # client.connect(host = "localhost", port = 1883)
+    client.connect(host = "172.20.10.5", port = 1883)
     client.subscribe('history', 0)
 
     try:

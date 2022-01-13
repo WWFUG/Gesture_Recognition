@@ -1,8 +1,8 @@
 # Gesture_Recognition
 ## How to Run
-#### Run the eclipse mosquitto docker container
+#### Run the eclipse mosquitto
 ```bash
-$ cd server_MQTT && sudo docker run -d -it -p 1883:1883 -p 9001:9001 -v $(pwd)/mosquitto.conf:/mosquitto/config/mosquitto.conf eclipse-mosquitto
+$ mosquitto -c ./src/server_MQTT/mosquitto.conf -v 
 ```
 #### Run Main Program
 ```bash

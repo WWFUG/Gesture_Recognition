@@ -14,12 +14,12 @@ from sound import speech
 vcap = cv2.VideoCapture(0) 										# webcam
 vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
-interval = 2
+interval = 5
 i=0
 from predict import Predictor
-# p = Predictor()
+p = Predictor()
 
-with mp_hands.Hands( model_complexity=0, min_detection_confidence=0.5, min_tracking_confidence=0.5) as hands:
+with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=1, static_image_mode=False ) as hands:
 
 	while True:
 		mep = timeit.default_timer()
@@ -51,17 +51,12 @@ with mp_hands.Hands( model_complexity=0, min_detection_confidence=0.5, min_track
 						mp_drawing_styles.get_default_hand_connections_style())
 
 					# predict 
-					# ch = p.predict( hand_landmarks.landmark )
+					ch = p.predict( hand_landmarks.landmark )
 					# speech("mep")
 					# send("mep")
 
-			end = timeit.default_timer()
-			#print("Drawing time ", end-start)
-			# Flip the image horizontally for a selfie-view display.
-			end = timeit.default_timer()
-			# print("Tol time ", end-mep)
 			i=0
 		cv2.imshow('MediaPipe Hands', image)
-		if cv2.waitKey(1)  & 0xFF==ord('q'):
+		if cv2.waitKey(1)  & 0xFF==ord('4'):
 			break
 		i += 1 

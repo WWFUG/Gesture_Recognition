@@ -7,7 +7,7 @@ mp_drawing = mp.solutions.drawing_utils
 vcap = cv2.VideoCapture(0) 										# webcam
 vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
-interval = 2
+interval = 1
 chars = ['A', 'B', 'C','D','E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O' ,
 	'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'del', 'space', 'wait' ]
 keys = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 
@@ -46,6 +46,9 @@ data_count = {}
 pressed = None
 interval_cnt = 0
 enable = False
+
+from predict import Predictor
+p = Predictor()
  
 with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=1 ) as hands:
 
@@ -65,6 +68,7 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 		image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 		if results.multi_hand_landmarks:
 			for hand_landmarks in results.multi_hand_landmarks:
+				p.predict(hand_landmarks.landmark)
 				# draw
 				mp_drawing.draw_landmarks(
 					image,
@@ -80,7 +84,7 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 		# add to csv
 		if interval_cnt % interval == 0:
 
-			if pressed != None:
+			if (pressed != None) and (pressed in key_label):
 
 				interval_cnt = 1
 

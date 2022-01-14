@@ -22,7 +22,7 @@ vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 DRAW_INTERVAL = 2
 PRED_INTERVAL = 6
 SWITCH_INTERVAL = 4
-CLEAR_INTERVAL = 5
+CLEAR_INTERVAL = 10
 i=0
 
 ##
@@ -37,13 +37,13 @@ no_hand_cnt = CLEAR_INTERVAL
 from predict import Predictor
 p = Predictor()
 
+
 with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=1, static_image_mode=False ) as hands:
 
 	while True:
 		mep = timeit.default_timer()
 		ret, image = vcap.read()
 		#image = cv2.resize(frame, (1080, 560))
-
 
 		# To improve performance, optionally mark the image as not writeable to
 		# pass by reference.
@@ -58,6 +58,7 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 			start = timeit.default_timer()
 
 			if no_hand_cnt >= CLEAR_INTERVAL:
+				#print("Clear buffer")
 				predict_buf = []
 				cur_state = State.READ
 				prev_ret_cn = ""
@@ -84,7 +85,15 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 							occur = Counter(predict_buf)
 							ret_ch, cnt = occur.most_common()[0]
 							if cnt > PRED_INTERVAL/2:
-								print("Output " + ret_ch)
+								if ret_ch == 'del':
+									print('\b \b', flush=True, end='')
+								elif ret_ch == 'wait':
+									pass
+								elif ret_ch == 'space':
+									print(" ", flush=True, end='')
+								else:
+									print(ret_ch, flush=True, end='')
+								# print(ret_ch, flush=True, end='')
 								cur_state = State.INPUT
 								prev_ret_ch = ret_ch
 								predict_buf = []
@@ -94,7 +103,7 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 						if len(predict_buf) == SWITCH_INTERVAL:
 							occur = Counter(predict_buf)
 							if occur[prev_ret_ch] < SWITCH_INTERVAL/2:
-								print("Change Character")
+								#print("Change Character")
 								cur_state = State.READ
 							else:
 								predict_buf.pop(0)

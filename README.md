@@ -6,7 +6,7 @@ $ mosquitto -c ./src/server_MQTT/mosquitto.conf -v
 ```
 #### Run Main Program
 ```bash
-$ python3 server.py
+$ python3 ./src/server.py
 ```
 #### Listen to  Main Program
 ```bash

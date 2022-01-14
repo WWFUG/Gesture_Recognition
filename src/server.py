@@ -7,7 +7,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_drawing = mp.solutions.drawing_utils
 
 from sound import speech
-# from server_MQTT.publisher import send
+from server_MQTT.publisher import send
 
 
 # vcap = cv2.VideoCapture("rtmp://192.168.55.1/rtmp/live")		# rtmp
@@ -53,7 +53,7 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 					# predict 
 					ch = p.predict( hand_landmarks.landmark )
 					# speech("mep")
-					# send("mep")
+					send(ch)
 
 			i=0
 		cv2.imshow('MediaPipe Hands', image)

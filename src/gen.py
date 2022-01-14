@@ -7,12 +7,12 @@ mp_drawing = mp.solutions.drawing_utils
 vcap = cv2.VideoCapture(0) 										# webcam
 vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
-interval = 1
+interval = 2
 chars = ['A', 'B', 'C','D','E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O' ,
-	'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'del', 'space', 'wait' ]
+	'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'del', 'space', 'empty' ]
 keys = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 
 	'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3' ]
-fname = './data/train2.csv'
+fname = './data/com2.csv'
 
 from pynput import keyboard
 
@@ -77,6 +77,7 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 					mp_drawing_styles.get_default_hand_landmarks_style(),
 					mp_drawing_styles.get_default_hand_connections_style())
 
+		image = cv2.flip( image, 1 )
 		cv2.imshow('MediaPipe Hands', image)
 		if cv2.waitKey(1)  & 0xFF==ord('4'):
 			break

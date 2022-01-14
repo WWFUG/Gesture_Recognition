@@ -27,8 +27,7 @@ i=0
 
 ##
 predict_buf = []
-pred_i = 0
-switch_i = 0
+word_buf = ""
 cur_state = State.READ
 prev_ret_ch = ""
 no_hand_cnt = CLEAR_INTERVAL
@@ -73,7 +72,7 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 					# predict 
 					ch = p.predict( hand_landmarks.landmark )
 					# speech("mep")
-					send(ch)
+					#send(ch)
 
 					#send("mep")
 					predict_buf.append(ch)
@@ -85,12 +84,16 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 							if cnt > PRED_INTERVAL/2:
 								if ret_ch == 'del':
 									print('\b \b', flush=True, end='')
+									word_buf.pop(-1)
 								elif ret_ch == 'wait':
 									pass
 								elif ret_ch == 'space':
 									print(" ", flush=True, end='')
+									send(word_buf)
+									word_buf = ""
 								else:
 									print(ret_ch, flush=True, end='')
+									word_buf += ret_ch
 								# print(ret_ch, flush=True, end='')
 								cur_state = State.INPUT
 								prev_ret_ch = ret_ch

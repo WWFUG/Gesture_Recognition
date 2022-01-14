@@ -20,7 +20,7 @@
 
         <div id="root" class="todo-app__root">
             <header class="todo-app__header">
-                <h1 class="todo-app__title">todos</h1>
+                <h1 class="todo-app__title">Subscribe</h1>
             </header>
 
             <!-- <script type = "text/javascript"> </script> -->
@@ -32,20 +32,23 @@
                 //var port=9001;
             </script>
     
-            <div id = "status"> Connection Status: Not Connected </div>
+            <p id = "status">Not Connected<p>
             
-            <br>
-                <form name = "connform" action = "" onsubmit = "return MQTTconnect()">
-                    Server:  <input type = "text" name = "server"><br><br>
-                    Port:    <input type = "text" name = "port"><br><br>
-                    <input type = "submit" value = "Connect">
-                </form>
+            <form name = "connform" action = "" onsubmit = "return MQTTconnect()">
+                <input type = "text" name = "server" placeholder = "Server" required>
+                    <br>
+                <input type = "text" name = "port"   placeholder = "Port"   required>
+                    <br>
+                <!-- <input type = "submit" value = "Connect"> -->
+                <button>Connect</button>
+            </form>
 
-            <hr>
-                <form name = "subs" action = "" onsubmit = "return sub_topics()">
-                    Subscribe Topic:   <input type = "text" name = "Stopic"><br><br>
-                    <input type = "submit" value = "Subscribe">
-                </form> 
+            <form name = "subs" action = "" onsubmit = "return sub_topics()">
+                <input type = "text" name = "Stopic" placeholder = "Subscribe topic" required><br>
+                    <!-- <br> -->
+                <!-- <input type = "submit" value = "Subscribe"> -->
+                <button>Subscribe</button>
+            </form> 
             <!-- <hr>
                 <form name="smessage" action="" onsubmit="return send_message()">
 
@@ -53,9 +56,10 @@
                     Publish Topic:   <input type="text" name="Ptopic"><br><br>
                     <input type="submit" value="Submit">
                 </form> -->
-            <hr>
-                Messages:<p id="messages"></p>
-
+            <!-- <form> -->
+            <p>Messages</p>
+            <p id = "messages"></p>
+            <!-- </form> -->
             <!-- <section class = "todo-app__main">
                 <input id = "todo-input" class = "todo-app__input" placeholder = "What needs to be done?">
                 <ul class = "todo-app__list" id = "todo-list">

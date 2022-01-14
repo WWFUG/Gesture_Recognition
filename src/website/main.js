@@ -1,3 +1,13 @@
+let utter = new SpeechSynthesisUtterance();
+utter.lang = 'en-US';
+// utter.text = 'Hello World';
+utter.volume = 0.5;
+
+// event after text has been spoken
+// utter.onend = function() {
+// 	alert('Speech has finished');
+// }
+
 function onConnectionLost(){
 	console.log("connection lost");
 	document.getElementById("status").innerHTML = "Connection Lost";
@@ -12,8 +22,12 @@ function onFailure(message) {
 }
 
 function onMessageArrived(r_message){
-	out_msg = "Message received " + r_message.payloadString + "<br>";
-	out_msg = out_msg + "Message received Topic " + r_message.destinationName;
+	// out_msg = "Message received " + r_message.payloadString + "<br>";
+	out_msg = r_message.payloadString;
+	utter.text = r_message.payloadString;
+	// speak
+	window.speechSynthesis.speak(utter);
+	// out_msg = out_msg + "Message received Topic " + r_message.destinationName;
 	//console.log("Message received ",r_message.payloadString);
 	console.log(out_msg);
 	document.getElementById("messages").innerHTML = out_msg;

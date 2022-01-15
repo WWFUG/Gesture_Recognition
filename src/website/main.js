@@ -77,6 +77,7 @@ function MQTTconnect() {
 	mqtt.onMessageArrived = onMessageArrived;
 	//mqtt.onConnected = onConnected;
 
+	mqtt.tls_set('./ca.crt', tls_version=2)
 	mqtt.connect(options);
 	return false;
 }

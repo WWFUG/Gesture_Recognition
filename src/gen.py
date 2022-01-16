@@ -68,7 +68,8 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 		image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 		if results.multi_hand_landmarks:
 			for hand_landmarks in results.multi_hand_landmarks:
-				p.predict(hand_landmarks.landmark)
+				ch = p.predict(hand_landmarks.landmark)
+				print(ch)
 				# draw
 				mp_drawing.draw_landmarks(
 					image,

@@ -1,15 +1,16 @@
 import cv2
 import mediapipe as mp
-import timeit
-import time
+import sys
+
 from enum import Enum
 from collections import Counter
+from sound import speech
+from server_MQTT.publisher import send
+from settings import DEFAULT_TOPIC
+
 mp_hands = mp.solutions.hands
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_drawing = mp.solutions.drawing_utils
-
-from sound import speech
-from server_MQTT.publisher import send
 
 class State(Enum):
 	READ = 0
@@ -23,9 +24,17 @@ DRAW_INTERVAL = 2
 PRED_INTERVAL = 6
 SWITCH_INTERVAL = 4
 CLEAR_INTERVAL = 10
-i=0
+
+if len(sys.argv) < 2: 
+	TOPIC = DEFAULT_TOPIC
+else:
+	TOPIC = sys.argv[1]
+print( "Publish to topic \"", TOPIC, "\"" )
+
+
 
 ##
+i=0
 predict_buf = []
 word_buf = ""
 cur_state = State.READ
@@ -40,7 +49,6 @@ p = Predictor()
 with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=1, static_image_mode=False ) as hands:
 
 	while True:
-		mep = timeit.default_timer()
 		ret, image = vcap.read()
 		image = cv2.resize(image, (1080, 720))
 
@@ -71,10 +79,8 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 
 					# predict 
 					ch = p.predict( hand_landmarks.landmark )
-					# speech("mep")
-					#send(ch)
+					# send( TOPIC, ch )
 
-					#send("mep")
 					predict_buf.append(ch)
 					# print(cur_state.name)
 					if cur_state == State.READ:
@@ -89,7 +95,7 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 									pass
 								elif ret_ch == 'space':
 									print(" ", flush=True, end='')
-									send(word_buf)
+									send( TOPIC, word_buf )
 									word_buf = ""
 								else:
 									print(ret_ch, flush=True, end='')

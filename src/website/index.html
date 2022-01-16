@@ -33,7 +33,9 @@
             </script>
     
             <!-- <p> Connection status </p> -->
-            <p id = "status">Not Connected<p>
+            <div id = "status-box">
+                <p id = "status">Not Connected<p>
+            </div>
             
             <form name = "connform" action = "" onsubmit = "return MQTTconnect()">
                 <input type = "text" name = "server" placeholder = "Server" required>
@@ -58,8 +60,10 @@
                     <input type="submit" value="Submit">
                 </form> -->
             <!-- <form> -->
-            <p>Messages</p>
-            <p id = "messages"></p>
+            <form>
+                <p>Messages</p>
+                <p id = "messages"></p>
+            </form>
             <!-- </form> -->
             <!-- <section class = "todo-app__main">
                 <input id = "todo-input" class = "todo-app__input" placeholder = "What needs to be done?">

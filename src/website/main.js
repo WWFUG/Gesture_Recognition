@@ -11,12 +11,15 @@ utter.volume = 0.5;
 function onConnectionLost(){
 	console.log("connection lost");
 	document.getElementById("status").innerHTML = "Connection Lost";
+	document.getElementById("status-box").style.backgroundColor = "#f78989d3";
 	document.getElementById("messages").innerHTML ="Connection Lost";
 	connected_flag=0;
 }
 
 function onFailure(message) {
 	console.log("Failed");
+	document.getElementById("status").innerHTML = "Connection Lost";
+	document.getElementById("status-box").style.backgroundColor = "#f78989d3";
 	document.getElementById("messages").innerHTML = "Connection Failed- Retrying";
 	setTimeout(MQTTconnect, reconnectTimeout);
 }
@@ -42,6 +45,7 @@ function onConnect() {
 	document.getElementById("messages").innerHTML = "Connected to " + host + "on port " + port;
 	connected_flag = 1
 	document.getElementById("status").innerHTML = "Connected";
+	document.getElementById("status-box").style.backgroundColor = "#93f193cb";
 	console.log("on Connect " + connected_flag);
 	//mqtt.subscribe("sensor1");
 	//message = new Paho.MQTT.Message("Hello World");
@@ -77,7 +81,7 @@ function MQTTconnect() {
 	mqtt.onMessageArrived = onMessageArrived;
 	//mqtt.onConnected = onConnected;
 
-	mqtt.tls_set('./ca.crt', tls_version=2)
+	// mqtt.tls_set('./ca.crt', tls_version=2)
 	mqtt.connect(options);
 	return false;
 }

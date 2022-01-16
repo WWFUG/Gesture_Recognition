@@ -8,7 +8,7 @@ def send(text):
     # Establish connection to mqtt broker
     client = mqtt.Client()
     client.connect(host = "localhost", port = 1883)
-    # client.connect(host = "172.20.10.5", port = 1883)
+    # client.connect(host = "192.168.43.29", port = 1883)
     client.loop_start()
     
     client.publish(topic = "history", payload = text)

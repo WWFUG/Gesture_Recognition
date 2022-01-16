@@ -10,6 +10,15 @@ body {
     overflow: hidden;
 }
 
+#status-box {
+    width: 480px;
+    text-align: center;
+    border-radius: 7px;
+    margin: 0.5em;
+    background-color: #f78989d3;
+    padding: 3px;
+}
+
 #root form {
 	background-image: linear-gradient(to top, rgba(205, 156, 242, 0.40) 0%, rgba(246, 255, 255, 0.71) 100%);
 	/* box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31); */

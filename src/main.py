@@ -135,7 +135,7 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 		short_display_str = display_str[-12:]
 		cv2.rectangle(image, (0, 700), (800, 590), (0, 0, 0), -1)
 		cv2.putText(image, short_display_str+"_", (5, 670), cv2.FONT_HERSHEY_COMPLEX_SMALL, 4, (255, 255, 255), 1, cv2.LINE_AA)
-		cv2.imshow('MediaPipe Hands', image)
+		cv2.imshow('American Sign Language Recognition', image)
 		if cv2.waitKey(1)  & 0xFF==ord('4'):
 			break
 		i += 1 

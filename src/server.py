@@ -15,6 +15,9 @@ class State(Enum):
 	READ = 0
 	INPUT = 1
 
+from predict import Predictor
+p = Predictor()
+
 # vcap = cv2.VideoCapture("rtmp://192.168.43.196/rtmp/live")		# rtmp
 vcap = cv2.VideoCapture(0) 										# webcam
 vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
@@ -32,9 +35,7 @@ cur_state = State.READ
 prev_ret_ch = ""
 no_hand_cnt = CLEAR_INTERVAL
 
-
-from predict import Predictor
-p = Predictor()
+display_str = ""
 
 
 with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=1, static_image_mode=False ) as hands:
@@ -71,12 +72,8 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 
 					# predict 
 					ch = p.predict( hand_landmarks.landmark )
-					# speech("mep")
-					#send(ch)
 
-					#send("mep")
 					predict_buf.append(ch)
-					# print(cur_state.name)
 					if cur_state == State.READ:
 						if len(predict_buf)==PRED_INTERVAL:
 							occur = Counter(predict_buf)
@@ -84,16 +81,19 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 							if cnt > PRED_INTERVAL/2:
 								if ret_ch == 'del':
 									print('\b \b', flush=True, end='')
-									word_buf.pop(-1)
+									word_buf = word_buf[:-1]
+									display_str = display_str[:-1]
 								elif ret_ch == 'wait':
 									pass
 								elif ret_ch == 'space':
 									print(" ", flush=True, end='')
 									send(word_buf)
 									word_buf = ""
+									display_str += " "
 								else:
 									print(ret_ch, flush=True, end='')
 									word_buf += ret_ch
+									display_str += ret_ch
 								# print(ret_ch, flush=True, end='')
 								cur_state = State.INPUT
 								prev_ret_ch = ret_ch
@@ -111,7 +111,8 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 			else:
 				no_hand_cnt += 1
 			i=0
-
+		cv2.rectangle(image, (5, 610), (1070, 580), (0, 0, 0), -1)
+		cv2.putText(image, display_str+"_", (10, 600), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 255, 255), 1, cv2.LINE_AA)
 		cv2.imshow('MediaPipe Hands', image)
 		if cv2.waitKey(1)  & 0xFF==ord('4'):
 			break

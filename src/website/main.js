@@ -42,7 +42,7 @@ function onConnected(recon,url){
 
 function onConnect() {
 	// Once a connection has been made, make a subscription and send a message.
-	document.getElementById("messages").innerHTML = "Connected to " + host + "on port " + port;
+	document.getElementById("messages").innerHTML = "Connected to " + host + " on port " + port;
 	connected_flag = 1
 	document.getElementById("status").innerHTML = "Connected";
 	document.getElementById("status-box").style.backgroundColor = "#93f193cb";

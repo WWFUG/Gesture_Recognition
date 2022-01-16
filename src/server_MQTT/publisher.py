@@ -3,17 +3,22 @@ import argparse
 
 import psutil
 import paho.mqtt.client as mqtt
+from settings import HOST_IP
 
-def send(text):
-    # Establish connection to mqtt broker
-    client = mqtt.Client()
-    client.connect(host = "localhost", port = 1883)
-    # client.connect(host = "192.168.43.29", port = 1883)
-    client.loop_start()
-    
-    client.publish(topic = "history", payload = text)
 
-    client.loop_stop()
+def send( topic, text ):
+	# Establish connection to mqtt broker
+	try:
+		client = mqtt.Client()
+		client.connect(host = HOST_IP, port = 1883)
+		client.loop_start()
+		
+		client.publish( topic = topic , payload = text )
+
+		client.loop_stop()
+
+	except:
+		print( "Error: Connection Failed" )
 
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser()

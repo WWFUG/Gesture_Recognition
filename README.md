@@ -9,6 +9,9 @@ $ mosquitto -c ./src/server_MQTT/mosquitto.conf -v
 $ python3 ./src/server.py
 ```
 #### Listen to  Main Program
+* By terminal
 ```bash
-$ python3 subscriber.py --ip localhost --port 1883
+$ python3 ./src/client_MQTT/subscriber.py --ip localhost --port 1883
 ```
+* By website
+https://kaowyk.github.io/ASLR-Subscriber/

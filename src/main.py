@@ -45,6 +45,7 @@ prev_ret_ch = ""
 no_hand_cnt = CLEAR_INTERVAL
 
 display_str = ""
+result = None
 
 
 with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=1, static_image_mode=False ) as hands:
@@ -55,10 +56,12 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 
 		# To improve performance, optionally mark the image as not writeable to
 		# pass by reference.
+		image.flags.writeable = False
+		image_pred = cv2.cvtColor( image, cv2.COLOR_BGR2RGB )
+
 		if i%DRAW_INTERVAL==0:
-			image.flags.writeable = False
-			image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-			results = hands.process(image)
+
+			results = hands.process(image_pred)
 
 			# Draw the hand annotations on the image.
 			if no_hand_cnt >= CLEAR_INTERVAL:
@@ -70,13 +73,6 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 			if results.multi_hand_landmarks:
 				no_hand_cnt = 0
 				for hand_landmarks in results.multi_hand_landmarks:
-					# draw
-					mp_drawing.draw_landmarks(
-						image,
-						hand_landmarks,
-						mp_hands.HAND_CONNECTIONS,
-						mp_drawing_styles.get_default_hand_landmarks_style(),
-						mp_drawing_styles.get_default_hand_connections_style())
 
 					# predict 
 					ch = p.predict( hand_landmarks.landmark )
@@ -121,6 +117,19 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 			else:
 				no_hand_cnt += 1
 			i=0
+
+
+		if results != None and results.multi_hand_landmarks:
+
+			for hand_landmarks in results.multi_hand_landmarks:
+
+				# draw
+				mp_drawing.draw_landmarks(
+					image,
+					hand_landmarks,
+					mp_hands.HAND_CONNECTIONS,
+					mp_drawing_styles.get_default_hand_landmarks_style(),
+					mp_drawing_styles.get_default_hand_connections_style())
 
 		# display_str = "AAAAABBBBBCC"
 		short_display_str = display_str[-12:]

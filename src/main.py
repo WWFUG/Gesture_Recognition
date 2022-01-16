@@ -90,8 +90,9 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 							if cnt > PRED_INTERVAL/2:
 								if ret_ch == 'del':
 									print('\b \b', flush=True, end='')
-									word_buf = word_buf[:-1]
-									display_str = display_str[:-1]
+									if ( len(word_buf) > 0 ):
+										word_buf = word_buf[:-1]
+										display_str = display_str[:-1]
 								elif ret_ch == 'wait':
 									pass
 								elif ret_ch == 'space':
@@ -120,8 +121,11 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 			else:
 				no_hand_cnt += 1
 			i=0
-		cv2.rectangle(image, (5, 610), (1070, 580), (0, 0, 0), -1)
-		cv2.putText(image, display_str+"_", (10, 600), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 255, 255), 1, cv2.LINE_AA)
+
+		# display_str = "AAAAABBBBBCC"
+		short_display_str = display_str[-12:]
+		cv2.rectangle(image, (0, 700), (800, 590), (0, 0, 0), -1)
+		cv2.putText(image, short_display_str+"_", (5, 670), cv2.FONT_HERSHEY_COMPLEX_SMALL, 4, (255, 255, 255), 1, cv2.LINE_AA)
 		cv2.imshow('MediaPipe Hands', image)
 		if cv2.waitKey(1)  & 0xFF==ord('4'):
 			break

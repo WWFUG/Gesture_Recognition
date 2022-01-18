@@ -11,6 +11,7 @@ $ python3 ./src/main.py [topic]
 #### Listen to  Main Program
 * By terminal
 ```bash
+$ sudo systemctl stop mosquitto.service
 $ python3 ./src/client_MQTT/subscriber.py --ip localhost --port 1883 --topic <topic>
 ```
 * By website

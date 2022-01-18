@@ -23,10 +23,10 @@ p = Predictor()
 vcap = cv2.VideoCapture(0) 										# webcam
 vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
-DRAW_INTERVAL = 2
-PRED_INTERVAL = 6
-SWITCH_INTERVAL = 4
-CLEAR_INTERVAL = 10
+DRAW_INTERVAL = 3
+PRED_INTERVAL = 5
+SWITCH_INTERVAL = 3
+CLEAR_INTERVAL = 5
 
 if len(sys.argv) < 2: 
 	TOPIC = DEFAULT_TOPIC
@@ -133,8 +133,9 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 
 		# display_str = "AAAAABBBBBCC"
 		short_display_str = display_str[-12:]
-		cv2.rectangle(image, (0, 700), (800, 590), (0, 0, 0), -1)
-		cv2.putText(image, short_display_str+"_", (5, 670), cv2.FONT_HERSHEY_COMPLEX_SMALL, 4, (255, 255, 255), 1, cv2.LINE_AA)
+		cv2.rectangle(image, (0, 700), (1080, 590), (0, 0, 0, 0.5), -1)
+		pos = (5, 670)
+		cv2.putText(image, short_display_str+"_", pos, cv2.FONT_HERSHEY_COMPLEX_SMALL, 4, (255, 255, 255), 1, cv2.LINE_AA)
 		cv2.imshow('MediaPipe Hands', image)
 		if cv2.waitKey(1)  & 0xFF==ord('4'):
 			break

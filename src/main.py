@@ -19,14 +19,21 @@ class State(Enum):
 from predict import Predictor
 p = Predictor()
 
-# vcap = cv2.VideoCapture("rtmp://192.168.43.196/rtmp/live")		# rtmp
+
+use_webcam = False
+# vcap = cv2.VideoCapture("rtmp://172.20.10.7/rtmp/live")		# rtmp
+# vcap = cv2.VideoCapture("rtmp://192.168.55.1/rtmp/live")		# rtmp
+
 vcap = cv2.VideoCapture(0) 										# webcam
+use_webcam = True
+
 vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
-DRAW_INTERVAL = 3
-PRED_INTERVAL = 5
-SWITCH_INTERVAL = 3
-CLEAR_INTERVAL = 5
+
+DRAW_INTERVAL = 4
+PRED_INTERVAL = 6
+SWITCH_INTERVAL = 5
+CLEAR_INTERVAL = 3
 
 if len(sys.argv) < 2: 
 	TOPIC = DEFAULT_TOPIC
@@ -52,7 +59,10 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 
 	while True:
 		ret, image = vcap.read()
-		image = cv2.resize(image, (1080, 720))
+		image = cv2.resize(image, (540, 360))
+		if ( not use_webcam ):
+			image = cv2.flip(image, 0)
+			image = cv2.flip(image, 1)
 
 		# To improve performance, optionally mark the image as not writeable to
 		# pass by reference.
@@ -118,7 +128,6 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 				no_hand_cnt += 1
 			i=0
 
-
 		if results != None and results.multi_hand_landmarks:
 
 			for hand_landmarks in results.multi_hand_landmarks:
@@ -132,11 +141,13 @@ with mp_hands.Hands( model_complexity=1, min_detection_confidence=0.5, min_track
 					mp_drawing_styles.get_default_hand_connections_style())
 
 		# display_str = "AAAAABBBBBCC"
+		image = cv2.flip(image, 1)
+		image = cv2.resize(image, (1080, 720))
 		short_display_str = display_str[-12:]
 		cv2.rectangle(image, (0, 700), (1080, 590), (0, 0, 0, 0.5), -1)
 		pos = (5, 670)
 		cv2.putText(image, short_display_str+"_", pos, cv2.FONT_HERSHEY_COMPLEX_SMALL, 4, (255, 255, 255), 1, cv2.LINE_AA)
-		cv2.imshow('MediaPipe Hands', image)
+		cv2.imshow('American Sign Language Recognition', image)
 		if cv2.waitKey(1)  & 0xFF==ord('4'):
 			break
 		i += 1 

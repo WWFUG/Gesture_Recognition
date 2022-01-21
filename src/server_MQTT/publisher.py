@@ -9,7 +9,8 @@ client = None
 
 def connect():
 	try:
-		client = mqtt.Client()
+		global client
+		client  = mqtt.Client()
 		client.connect(host = HOST_IP, port = 1883)
 	except:
 		print( "Error: Connection Failed" )

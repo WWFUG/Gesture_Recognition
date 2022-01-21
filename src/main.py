@@ -22,16 +22,16 @@ connect()
 
 
 use_webcam = False
-# vcap = cv2.VideoCapture("rtmp://172.20.10.7/rtmp/live")		# rtmp
-vcap = cv2.VideoCapture("rtmp://192.168.55.1/rtmp/live")		# rtmp
+vcap = cv2.VideoCapture("rtmp://172.20.10.7/rtmp/live")		# rtmp
+# vcap = cv2.VideoCapture("rtmp://192.168.55.1/rtmp/live")		# rtmp
 
 # vcap = cv2.VideoCapture(0) 										# webcam
 # use_webcam = True
 
-vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+#vcap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
 
-DRAW_INTERVAL = 4
+DRAW_INTERVAL = 3
 PRED_INTERVAL = 6
 SWITCH_INTERVAL = 5
 CLEAR_INTERVAL = 3

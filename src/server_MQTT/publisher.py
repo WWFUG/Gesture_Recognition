@@ -5,16 +5,22 @@ import psutil
 import paho.mqtt.client as mqtt
 from settings import HOST_IP
 
+client = None
+
+def connect():
+	try:
+		client = mqtt.Client()
+		client.connect(host = HOST_IP, port = 1883)
+	except:
+		print( "Error: Connection Failed" )
+
 
 def send( topic, text ):
 	# Establish connection to mqtt broker
 	try:
-		client = mqtt.Client()
-		client.connect(host = HOST_IP, port = 1883)
-		client.loop_start()
-		
-		client.publish( topic = topic , payload = text )
 
+		client.loop_start()
+		client.publish( topic = topic , payload = text )
 		client.loop_stop()
 
 	except:

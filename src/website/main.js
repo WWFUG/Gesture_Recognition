@@ -1,7 +1,10 @@
 let utter = new SpeechSynthesisUtterance();
 utter.lang = 'en-US';
+let voices = speechSynthesis.getVoices()
+// utter.voice = voices[7]
 // utter.text = 'Hello World';
-utter.volume = 0.5;
+utter.volume = 1.0;
+utter.rate = 0.6
 
 // event after text has been spoken
 // utter.onend = function() {

@@ -15,5 +15,5 @@ $ sudo systemctl stop mosquitto.service
 $ python3 ./src/client_MQTT/subscriber.py --ip localhost --port 1883 --topic <topic>
 ```
 * By website (using Google Chrome)
-    * Open index.html in src/website
+    * Open "index.html" in the directory "src/website"
     * Deployed but can't use: https://kaowyk.github.io/ASLR-Subscriber/
